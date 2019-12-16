@@ -1,0 +1,576 @@
+列表:
+	names = ["a" , "b", "c"]
+	name2 = ["d", "e"]
+
+	可用操作：
+	names[0]
+	names[1-3]
+
+	增加：
+		insert(0, "x")
+		append("x")
+		extends(name2)
+	删除：
+		pop()
+		remove("x")
+		del names[0]
+	查询：
+		in
+		not in
+	修改:
+	names[0] = "xx"
+
+字典：
+	info = {"name":"name", "age":18}
+
+	添加:
+	info["qq"] = 132222
+	删除：
+	del info["name"]
+	查找：
+	info["name"]  #没有会报错
+	info.get("name")  #没有不会报错
+
+	修改：
+	info["name"] = "name"
+
+Python中交换两个值得方法：
+	1、 a = a + b
+		b = a - b
+		a = a - b
+
+	2、 c = a
+	    a = b
+	    b = c
+
+	3、 a,b = b,a
+
+不定长参数：*args
+	示例：
+	#coding=utf-8
+	  2 
+	  3 
+	  4 def sum_num(*args):
+	  5     sum_num = 0;
+	  6     for i in args:
+	  7         sum_num += i
+	  8     return sum_num
+	  9 
+	 10 
+	 11 def test(a,b,c=3,*args,**kwargs):
+	 12     print(a)
+	 13     print(b)
+	 14     print(c)
+	 15     print(args)
+	 16     print(kwargs)
+	 17 
+	 18 
+	 19 def main():
+	 20     #print(sum_num(1,2,3,4))
+	 21     A = (4,5,6)
+	 22     B = {"name":7, "age":8}
+	 23     #test(1,2,3,A,B)
+	 24     test(1,2,3,*A,**B)  #自动拆包
+	 25 	test(1,2,3,4,5,6,name=7,age=8)
+	 26 main()
+
+
+文件读写：
+	 f = open("17-递归.py","r")
+
+	In [3]: f.read()
+	Out[3]: '#coding = utf-8\n\n\n\ndef getNums(num):\n\tif num == 1:\n\t\treturn num\n\telse:\n\t\treturn num * getNums(num-1)\n\n\nprint(getNums(4))\n'
+
+	In [4]: f.readline()
+	Out[4]: ''
+
+	In [5]: f.seek(0)
+	Out[5]: 0
+
+	In [6]: f.readl
+	f.readline   f.readlines
+
+	In [6]: f.readline()
+	Out[6]: '#coding = utf-8\n'
+
+	In [7]: f.seek(0)
+	Out[7]: 0
+
+	In [8]: f.readlines()
+	Out[8]:
+	['#coding = utf-8\n',
+	 '\n',
+	 '\n',
+	 '\n',
+	 'def getNums(num):\n',
+	 '\tif num == 1:\n',
+	 '\t\treturn num\n',
+	 '\telse:\n',
+	 '\t\treturn num * getNums(num-1)\n',
+	 '\n',
+	 '\n',
+	 'print(getNums(4))\n']
+
+
+大文件处理:
+
+
+多个实例对象共享同一个类对象
+
+列表生成式
+a = [i for i in range(1,10)]
+b = [i for i in range(1,10) if i % 2 == 0]	
+d = [(i,j) for i in range(3) for j in range(2)]
+
+
+列表去重
+
+
+循环期间不能删除循环列表中的元素
+会引起漏删（删掉后列表会填充缺少元素的位置  导致向后删除时漏掉一个）
+	example:
+		a = [11,22,33,44,55]
+		b = []  # 记录要删除的元素
+		for i in a:
+			if i == 33 or i == 44:
+				b.append(i)
+
+		for i in b:
+			a.remove(i)
+
+
+类：
+	a = Animal()
+	b = a
+	del a #不会释放Animal实例 需要再del b
+
+
+路径问题：
+example: "/home/xx", "../"
+以“/”开头为绝对路径 不以“/”开头为相对路径
+
+
+关于“==”，“is”的区别：
+"=="比较内容 “is”比较两个引用是否指向同一个对象
+
+深拷贝与浅拷贝：
+深拷贝是递归拷贝
+浅拷贝只拷贝第一层
+
+
+property属性的作用:
+num = property(getNum, setNum)
+
+t.num  # 会调用getNum
+t.num = 100 # 会调用setNum
+
+
+判断一个属性是否是一种类型:
+isinstence(属性, 类型)
+
+将可迭代元素转成迭代器：
+a = [1,2,3,4]
+b = iter(a)
+# 然后b就可以调用next()方法
+b.next()  #到达最后继续使用next()的话会抛出StopIteration异常
+
+
+闭包：
+函数中嵌套函数：
+def test(number):
+	def test_in():
+		xx  # 使用了number
+	return test_in  #返回了内部方法
+
+
+简单装饰器：
+ 1 #coding=utf-8
+  2
+  3 def w1(func):
+  4     def inner():
+  5         if "我有权限":
+  6             print("您有权限,开始执行任务")
+  7             func()
+  8         else:
+  9             print("你没有权限")
+ 10     return inner
+ 11
+ 12 @w1
+ 13 def f1():
+ 14     '''
+ 15     任务1
+ 16     需要验证权限~
+ 17     '''
+ 18     print("执行任务1")
+ 19
+ 20 if __name__ == "__main__":
+ 21     f1()
+
+ 两层装饰器：
+ #coding=utf-8
+
+def w2(func):
+    def wapped():
+        '''第二层装饰：'''
+        return func()
+    return wapped
+
+def w1(func):
+    def inner():
+        if "我有权限":
+            print("您有权限,开始执行任务")
+            func()
+        else:
+        	print("你没有权限")
+    return inner
+
+@w2       # f1 = w2(f1) w2装饰
+@w1		  # f1 = w1(f1) 先w1装饰 
+def f1():
+        '''
+        任务1
+        需要验证权限~
+        '''
+        print("执行任务1")
+
+if __name__ == "__main__":
+        f1()
+
+
+多层装饰器的调用顺序：
+def w1(func):
+    print("正在装饰1...")
+    def inner():
+        print("正在验证权限1---")
+        func()
+    return inner
+
+def w2(func):
+    print("正在装饰2---")
+    def inner():
+        print("正在验证权限2---")
+        func()
+    return inner
+
+#@w2
+#@w1
+def f1():
+	print("执行f1")
+
+#f1()
+w1_inner = w1(f1)  # 执行流程
+w2_inner = w2(w1_inner)
+w2_inner()
+执行结果：
+	正在装饰1---
+	正在装饰2---
+	正在验证权限2---
+	正在验证权限1---
+	执行f1
+
+
+def wapper(func):
+	'''通用无返回值装饰器'''
+    def inner(*args,**kwargs):
+        func(*args,**kwargs)
+    return inner
+
+@wapper
+def test(a,b):
+    print("a=%d, b=%d"%(a,b))
+
+@wapper
+def test2(a,b,c):
+    print("a=%d, b=%d, c=%d"%(a,b,c))
+
+@wapper
+def test3():
+    print("无参函数")
+
+#test(11,22)
+test3()
+
+
+
+def wapper(func):
+	'''通用装饰器模型'''
+    def inner(*args,**kwargs):
+        # 包装前调用
+        ret = func(*args,**kwargs)
+        # 包装后调用
+        return ret
+    return inner
+
+@wapper
+def test(a,b):
+    print("a=%d, b=%d"%(a,b))
+
+@wapper
+def test2(a,b,c):
+    print("a=%d, b=%d, c=%d"%(a,b,c))
+
+@wapper
+def test3():
+    print("无参函数")
+    return "test3"
+
+#test(11,22)
+ret = test3()
+print(ret)
+
+带有参数的通用装饰器:
+def wapper_args(pre):
+    def wapper(func):
+        print("pre=%s"%pre)
+        def inner(*args, **kwargs):
+            if pre == "王林锴":
+                print("王林锴,正在为您执行函数")
+                ret = func(*args, **kwargs)
+                return ret
+            else:
+                print("您没有权限执行函数")
+        return inner
+    return wapper
+
+@wapper_args("王林锴")
+def test(a):
+        return "test=%d"%a
+
+test(1)
+
+
+作用域：Python LEBG规则
+
+
+动态绑定参数与方法：
+import types
+class Person(object):
+    def __init__(self, name, age):
+        self.name = name
+        self.age = age
+
+def run(self):
+    print("%s is running"%self.name)
+
+@classmethod
+def printNum(cls):
+    print("----classmethod------")
+
+@staticmethod
+def s():
+    print("----staticmethod----")
+
+p = Person("tom", 21)
+p.run = types.MethodType(run, p, Person) # 将run动态添加成p的方法
+p.run()
+
+print("----添加静态方法----")
+Person.s = s
+Person.s()
+
+# 添加类方法
+print("-----添加类方法-----")
+Person.printNum = printNum
+Person.printNum()
+
+
+生成器 (为了解决大内存占用的问题)：
+def generator():
+	'''斐波那契数列的生成器'''
+    a,b = 0,1
+    for i in range(5):
+        yield b   # 每次调用遇到yield会返回b并暂停
+        a,b = b,a+b 
+
+# 使用生成器
+ for i in generator():
+ 	print(i)
+
+ 生成器的send()方法:
+ 		def test():
+   ...:     i = 0
+   ...:     while i < 5:
+   ...:         temp = yield i
+   ...:         print(temp)
+   ...:         i+=1
+   ...:
+
+In [9]: t = test()
+
+In [10]: next(t)
+Out[10]: 0
+
+In [11]: next(t)
+None
+Out[11]: 1
+
+In [12]: t.send("hh")
+hh
+Out[12]: 2
+
+ 	print("详情请参考百度  顺便去查查__next__()")  
+
+类当装饰器：
+ class Test(object):
+    def __init__(self, func):
+        self.__func = func
+
+    def __call__(self):  # 实现__call__就可以将类当方法调用
+        print("开始装饰")
+        self.__func()
+
+@Test
+def test():
+    print("test")
+
+test()
+
+
+黑魔法：元类
+def upper_attr(future_class_name, future_class_parents, future_class_attr):
+    '''将类中不以__开头的属性都变为大写'''
+    newAttr = {}
+    for name, value in future_class_attr.items():
+        if not name.startswith("__"):
+            newAttr[name.upper()] = value
+    return type(future_class_name, future_class_parents, newAttr)
+
+class Foo(object, metaclass=upper_attr):
+    bar = 'bip'
+
+f = Foo()
+print(f)
+print(hasattr(Foo, "bar"))
+print(hasattr(Foo, "BAR"))
+
+
+
+GC(GC垃圾回收):
+	1、以引用计数为主（c语言实现）
+	2、python解决循环引用方式：隔代回收
+		使用零代链表、一代链表、二代链表
+		首先判断是否存在循环引用，将循环引用的计数-1
+
+
+属性访问拦截器：
+class Cat(object):
+    def __init__(self, name):
+        self.name = name
+
+    def __getattribute__(self, obj):
+        '''获取属性时一定会调用'''
+        if obj == 'name':
+            print("log")
+            return "redirect python"
+        else:
+            return object.__getattribute__(self, obj)
+
+c = Cat("tom")
+print(c.name)
+
+
+map的作用：(传入一些元素通过调用指定的func得到一些返回值)
+	map(lambda x:x*x, [1,2,3])   # 返回一个map类型  for遍历得 1，4，9
+	map(lambda x,y: x+y, [1,2,3], [4,5,6])  # 5，7，9
+来个复杂的：
+	def f1(x, y):
+	return (x,y)
+
+	l1 = [1,2,3,4,5,6,7]
+	l2 = ['Mon','T','W','Thus','F','S','Sun']
+
+	ret = map(f1, l2, l1)
+	#list(ret)
+	for k,v in ret:
+	print('key is %s, value is %s'%(k,v))
+
+filter的作用：(过滤传入的元素)
+	height = [155, 176, 160, 180]
+
+	ret = filter(lambda x: x > 170, height)
+	print(ret)
+
+	for i in ret:
+	    print(i)
+
+
+reduce函数:
+	reduce(lambda x,y:x+y, [1,2,3,4], 5)
+	请自行百度含义
+
+
+set集合的一些操作：
+b&B 求交集
+b|B 求并集
+b-B 求差集
+b^B 求对称差集
+
+
+udpSocket可以发送广播：
+ip：192.168.2.255(255广播)
+网段：192.168.2.0
+子网掩码:255.255.255.0
+子网掩码的作用:与ip进行&&运算 得到网段 进而比较两个网络是否在同一个ip段
+
+关于ip, mac的作用：
+	mac地址，在两个设备通信时发生变化
+	ip:标记逻辑上的地址
+	mac:标记实际转发数据时的设备地址
+
+
+2018/6/8:
+	1、完成单任务-非阻塞式TCPServer
+
+
+2018/6/12
+ 	1、对于链表的操作，先操作新结点，然后在打断原结点
+
+
+
+mysql数据库操作:
+	数据库命令：
+	创建create database 数据库名 charset=utf8;
+	删除drop database 数据库名;
+	查看所有数据库：show databases;
+	使用数据库：use 数据库名;
+	----------------------------------------
+	表命令：
+	create table 表名(列...);
+	唯一标识的要求：id
+		类型：int unsigned
+		约束1：not null
+		约束2：primary key
+		约束3：auto_increment
+	列的格式：列的名称 类型 约束
+	create table stu(
+	    -> id int not null primary key auto_increment,
+	    -> name varchar(10) not null,
+	    -> gender bit default 1,
+	    -> birthday datetime,
+	    -> isDelete bit default 0,
+	    -> );
+	查看表show tables;
+	查看表结构desc 表名;
+	修改表：alter table 表名 add|modify|drop 列名 类型 约束;
+	alter table stu modify column isDelete bit not null default 0;
+	删除表：drop table 表名;
+	----------------------------------------
+	数据命令：
+	添加数据：insert into 表名(列名) values(值),(值)...;
+	修改数据：update 表名 set 列1=值1,... where ...;
+	删除数据：delete from 表名 where ...;
+	逻辑删除：update ....
+	备份：mysqldump >
+	恢复：mysql <
+
+
+pymysql查询操作: (注意操作！！！)
+	sql = "SELECT name,saving FROM trade WHERE account = '%s' "
+	data = ('13512345678',)
+	cursor.execute(sql % data)
+	for row in cursor.fetchall():
+	    print("Name:%s\tSaving:%.2f" % row)
+	print('共查找出', cursor.rowcount, '条数据')
+
+
+
