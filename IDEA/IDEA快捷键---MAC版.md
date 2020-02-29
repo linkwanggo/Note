@@ -6,6 +6,7 @@
 |               command+D               |          复制上一行           |
 |               command+W               |        关闭当前类窗口         |
 |               command+O               |        查找打开类文件         |
+|            command+shift+O            |         快速查找文件          |
 |               command+F               |  当前文本查找(可上下键切换)   |
 |              command+⇧+F              |           全局查找            |
 |               command+R               |         当前文本替换          |

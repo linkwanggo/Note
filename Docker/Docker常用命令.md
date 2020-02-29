@@ -2,6 +2,8 @@
 
 [Docker镜像仓库](https://hub.docker.com/)
 
+**友情提示：注意防火墙开启相应的端口**
+
 ## 搜索镜像
 
 ```bash
@@ -71,6 +73,13 @@ docker exec -it redis /bin/sh # alpine版进入方式
 
 ```bash
 docker logs mysql
+```
+
+## 从宿主机拷贝到容器
+
+```bash
+docker cp {宿主机文件路径} {容器名}:{容器内部路径}
+docker cp /home/sda1/data/html nginx:/root 
 ```
 
 
