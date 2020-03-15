@@ -7,7 +7,7 @@ echo "# JavaDemos" >> README.md
 git init
 git add README.md
 git commit -m "first commit"
-git remote add origin https://github.com/linkwanggo/JavaDemos.git
+git remote add origin (SSH)git:xxx.git
 git push -u origin master
 ```
 
