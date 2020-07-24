@@ -11,7 +11,7 @@
 通过pip安装virtualenv：
 
 ```
-pip install virtualenv
+pip3 install virtualenv
 virtualenv --version
 ```
 
@@ -49,19 +49,19 @@ deactivate
 用pip freeze查看当前安装版本
 
 ```
-pip freeze
+pip3 freeze
 ```
 
 将用到的包导出到requirements.txt
 
 ```
-pip freeze > requirements.txt
+pip3 freeze > requirements.txt
 ```
 
  这将会创建一个 `requirements.txt` 文件，其中包含了当前环境中所有包及 各自的版本的简单列表。您可以使用 “pip list”在不产生requirements文件的情况下， 查看已安装包的列表。这将会使另一个不同的开发者（或者是您，如果您需要重新创建这样的环境） 在以后安装相同版本的相同包变得容易。
 
 ```
-pip install -r requirements.txt
+pip3 install -r requirements.txt
 ```
 
 ## virtualenvwrapper
@@ -76,12 +76,20 @@ pip install -r requirements.txt
 
 安装（确保 **virtualenv** 已经安装了）：
 
-```
-pip install virtualenvwrapper
+```bash
+pip3 install virtualenvwrapper
 export WORKON_HOME=~/Envs  #设置环境变量
-mkdir -p $WORKON_HOME #创建虚拟环境管理目录
-find / -name virtualenvwrapper.sh #找到virtualenvwrapper.sh的路径
+whereis virtualenvwrapper.sh #找到virtualenvwrapper.sh的路径
+whereis python3 #找到python3的路径
 source 路径 #激活virtualenvwrapper.sh
+```
+
+**完整配置示例**
+
+```bash
+VIRTUALENVWRAPPER_PYTHON=/usr/local/python36/bin/python3
+export WORKON_HOME=/home/sda1/.virtualenvs
+source /usr/local/python36/bin/virtualenvwrapper.sh
 ```
 
 默认virtualenvwrapper安装在下面python解释器中的site-packages，实际上需要运行virtualenvwrapper.sh文件才行；所以需要先进行配置一下
@@ -153,14 +161,42 @@ rmvirtualenv project_env
 
 ```
 lsvirtualenv    #列举所有的环境。
-
 cdvirtualenv    #导航到当前激活的虚拟环境的目录中，比如说这样您就能够浏览它的site-packages。
-
 cdsitepackages   # 和上面的类似，但是是直接进入到 site-packages 目录中。
-
 lssitepackages     #显示 site-packages 目录中的内容。
-
 ```
 
 [virtualenvwrapper 命令的完全列表](https://virtualenvwrapper.readthedocs.io/en/latest/command_ref.html) 。
+
+## 4. 可能出现的问题
+
+### ImportError: No module named 'virtualenvwrapper'
+
+**完整错误：**
+
+/usr/bin/python3: Error while finding module specification for 'virtualenvwrapper.hook_loader' (ImportError: No module named 'virtualenvwrapper')
+virtualenvwrapper.sh: There was a problem running the initialization hooks.
+
+If Python could not import the module virtualenvwrapper.hook_loader,
+check that virtualenvwrapper has been installed for
+VIRTUALENVWRAPPER_PYTHON=/usr/bin/python3 and that PATH is
+set properly.
+
+**解决方案**
+
+如本例是python3路径问题 我们用`whereis python3`来看一下
+
+```
+python3: /usr/bin/python3 /usr/bin/python3.5m-config /usr/bin/python3.5 /usr/bin/python3.5-config /usr/bin/python3.5m /usr/lib/python3 /usr/lib/python3.5 /etc/python3 /etc/python3.5 /usr/local/lib/python3.5 /usr/include/python3.5 /usr/include/python3.5m /usr/share/python3 /usr/local/python36/bin/python3 /usr/local/python36/bin/python3.6 /usr/local/python36/bin/python3.6m-config /usr/local/python36/bin/python3.6-config /usr/local/python36/bin/python3.6m /usr/share/man/man1/python3.1.gz
+```
+
+实际当我们取第一个值时就会报错
+
+应该取:
+
+```
+/usr/local/python36/bin/python3.6
+```
+
+## ---END---
 

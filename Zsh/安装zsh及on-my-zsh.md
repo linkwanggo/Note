@@ -14,16 +14,17 @@ apt install zsh
 chsh -s /bin/zsh
 ```
 
+
+重新打开ssh,发现bash已切换到zsh
+
+`将~/.bashrc中的配置拷贝到~/.zshrc`
+
 查看当前shell
 
 ```
 cat /etc/shells
 echo $SHELL
 ```
-
-重新打开ssh,发现bash已切换到zsh
-
-`将~/.bashrc中的配置拷贝到~/.zshrc`
 
 ## 2. 安装on-my-zsh
 
@@ -43,13 +44,13 @@ sh -c "$(curl -fsSL https://raw.github.com/ohmyzsh/ohmyzsh/master/tools/install.
 
 ### 3.1 自动提示必不可少（[zsh-autosuggestions](https://github.com/zsh-users/zsh-autosuggestions)）
 
-```
+```bash
 git clone https://github.com/zsh-users/zsh-autosuggestions.git $ZSH_CUSTOM/plugins/zsh-autosuggestions
 ```
 
 ### 3.2 语法高亮 （[zsh-syntax-highlighting](https://github.com/zsh-users/zsh-syntax-highlighting)）
 
-```
+```bash
 git clone https://github.com/zsh-users/zsh-syntax-highlighting.git $ZSH_CUSTOM/plugins/zsh-syntax-highlighting
 ```
 

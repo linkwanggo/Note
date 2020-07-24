@@ -29,12 +29,12 @@ docker exec -it nginx-test /bin/sh # 进入容器的命令可能稍有不同
 ```
 
 ```
-mkdir -p /usr/share/nginx /etc/nginx/nginx.conf /var/log/nginx
+mkdir -p /etc/nginx /etc/nginx/conf.d /etc/nginx/logs
 ```
 
 ```
 docker cp nginx-test:/etc/nginx/nginx.conf /etc/nginx/
-docker cp nginx-test:/usr/share/nginx /usr/share
+docker cp nginx-test:/usr/share/nginx /etc/nginx/www
 docker cp nginx-test:/var/log/nginx /var/log
 ```
 
@@ -42,7 +42,9 @@ docker cp nginx-test:/var/log/nginx /var/log
 
 
 ```
-docker run -d -p 801:80 --name nginx -v /etc/nginx/nginx.conf:/etc/nginx/nginx.conf -v /usr/share/nginx:/usr/share/nginx -v /var/log/nginx:/var/log/nginx arm64v8/nginx:1.17-alpine
+# 根据自身情况进行修改
+cd /etc/nginx
+docker run --name nginx -d -p 80:80 -v $PWD/nginx.conf:/etc/nginx/nginx.conf -v $PWD/conf.d:/etc/nginx/conf.d -v $PWD/www:/usr/share/nginx/www -v $PWD/logs:/var/log/nginx -v $PWD/upload:/upload arm64v8/nginx:1.17-alpine
 ```
 
 ## 4. 修改本地html查看是否映射成功

@@ -30,3 +30,4 @@ Function<Integer,String> f = x -> {return  "hello" + i;};
 总结：peek接收一个没有返回值的λ表达式，可以做一些输出，外部处理等。map接收一个有返回值的λ表达式，之后Stream的泛型类型将转换为map参数λ表达式返回的类型
 
 # ---END---
+

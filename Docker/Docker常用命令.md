@@ -82,7 +82,28 @@ docker cp {宿主机文件路径} {容器名}:{容器内部路径}
 docker cp /home/sda1/data/html nginx:/root 
 ```
 
+## 容器开机自启动
 
+[参考链接](https://blog.csdn.net/xtjatswc/article/details/86586769)
+
+在使用docker run启动容器时，使用--restart参数来设置：
+
+```bash
+docker run -m 512m --memory-swap 1G -it -p 58080:8080 --restart=always   
+--name bvrfis --volumes-from logdata mytomcat:4.0 /root/run.sh
+```
+
+如果创建时未指定 --restart=always ,可通过update 命令设置
+
+```
+docker update --restart=always 容器名称 
+```
+
+还可以在使用on - failure策略时，指定Docker将尝试重新启动容器的最大次数。默认情况下，Docker将尝试永远重新启动容器。
+
+```bash
+docker run --restart=on-failure:10 redis  
+```
 
 
 
